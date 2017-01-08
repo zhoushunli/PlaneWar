@@ -9,4 +9,5 @@ import android.graphics.PointF;
 public interface IRole {
     void setLocation(float x,float y);
     PointF getLocation();
+    void destroyRole();
 }
