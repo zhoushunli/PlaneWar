@@ -1,6 +1,8 @@
 package com.zhousl.planewar.roles;
 
-import android.graphics.PointF;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 
 /**
  * Created by Administrator on 2017/1/6.
@@ -8,10 +10,10 @@ import android.graphics.PointF;
 
 public class MyPlane extends Role{
 
-    private PointF mLocation;
+    private RectF mLocation;
 
     public MyPlane(){
-        mLocation=new PointF();
+        mLocation=new RectF();
     }
 
     @Override
@@ -20,7 +22,16 @@ public class MyPlane extends Role{
     }
 
     @Override
-    protected PointF getCurLocation() {
+    protected RectF getCurLocation() {
         return mLocation;
+    }
+
+    @Override
+    public void drawSelf(Canvas canvas, Paint paint) {
+        if (mLocation.isEmpty())
+            throw new IllegalStateException("Role size and location must be specified!!!");
+        canvas.save();
+        canvas.drawRect(mLocation,paint);
+        canvas.restore();
     }
 }

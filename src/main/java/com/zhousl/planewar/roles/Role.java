@@ -1,6 +1,8 @@
 package com.zhousl.planewar.roles;
 
-import android.graphics.PointF;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 
 /**
  * Created by Administrator on 2017/1/6.
@@ -8,20 +10,34 @@ import android.graphics.PointF;
 
 public abstract class Role implements IRole {
 
-    private PointF curLocation;
+    private int maxHP;
+    private RectF curLocation;
 
     @Override
-    public void setLocation(float x, float y) {
+    public void setLocation(RectF rectF) {
         curLocation = getCurLocation();
         if (curLocation ==null)
             throw new IllegalArgumentException("no container provided to store curLocation.");
-        curLocation.set(x,y);
+        curLocation.set(rectF);
+    }
+    public void setLocation(float left,float top,float right,float bottom){
+        curLocation=getCurLocation();
+        getCurLocation().set(left,top,right,bottom);
+    }
+
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
     }
 
     @Override
-    public PointF getLocation() {
+    public RectF getLocation() {
         return curLocation;
     }
 
-    protected abstract PointF getCurLocation();
+    protected abstract RectF getCurLocation();
+    public abstract void drawSelf(Canvas canvas, Paint paint);
 }
